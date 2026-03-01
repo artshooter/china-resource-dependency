@@ -12,6 +12,7 @@
             --bg-primary: #0a0a0f;
             --bg-secondary: #12121a;
             --bg-card: #1a1a24;
+            --bg-card-hover: #222230;
             --text-primary: #f0f0f5;
             --text-secondary: #8888a0;
             --text-muted: #555566;
@@ -20,6 +21,7 @@
             --accent-yellow: #ffd43b;
             --accent-green: #2ed573;
             --accent-blue: #70a1ff;
+            --accent-purple: #a55eea;
             --border: #2a2a3a;
             --gradient-danger: linear-gradient(135deg, #ff4757, #ff6b81);
             --gradient-warning: linear-gradient(135deg, #ffa502, #ffb142);
@@ -39,7 +41,6 @@
             min-height: 100vh;
         }
 
-        /* Animated background */
         .bg-pattern {
             position: fixed;
             top: 0;
@@ -62,11 +63,10 @@
             z-index: 1;
         }
 
-        /* Header */
         header {
-            padding: 60px 0 40px;
+            padding: 40px 0 32px;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
         .header-content {
@@ -78,10 +78,10 @@
         }
 
         .title-section h1 {
-            font-size: clamp(32px, 5vw, 48px);
+            font-size: clamp(28px, 4vw, 42px);
             font-weight: 900;
             letter-spacing: -0.02em;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -89,9 +89,8 @@
         }
 
         .title-section p {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-secondary);
-            max-width: 600px;
         }
 
         .update-info {
@@ -101,82 +100,13 @@
             text-align: right;
         }
 
-        .update-info span {
-            display: block;
-            margin-bottom: 4px;
+        /* Country Map Section */
+        .country-section {
+            margin-bottom: 40px;
         }
 
-        /* Stats Overview */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-orange);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-danger);
-        }
-
-        .stat-card.warning::before {
-            background: var(--gradient-warning);
-        }
-
-        .stat-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--accent-red);
-            margin-bottom: 8px;
-        }
-
-        .stat-card.warning .stat-number {
-            color: var(--accent-orange);
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        /* Main Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-
-        @media (max-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Data Table */
         .section-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 20px;
             display: flex;
@@ -187,9 +117,299 @@
         .section-title::before {
             content: '';
             width: 4px;
-            height: 24px;
+            height: 20px;
             background: var(--accent-orange);
             border-radius: 2px;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .country-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .country-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-danger);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .country-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+
+        .country-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .country-card.active {
+            border-color: var(--accent-red);
+            background: rgba(255, 71, 87, 0.1);
+        }
+
+        .country-card.active::before {
+            transform: scaleX(1);
+        }
+
+        .country-flag {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .country-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .country-resources {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .country-risk {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .country-risk.critical {
+            background: rgba(255, 71, 87, 0.2);
+            color: var(--accent-red);
+        }
+
+        .country-risk.high {
+            background: rgba(255, 165, 2, 0.2);
+            color: var(--accent-orange);
+        }
+
+        /* Detail Panel */
+        .detail-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .detail-panel.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-flag {
+            font-size: 48px;
+        }
+
+        .detail-title h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .detail-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .close-btn {
+            margin-left: auto;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .detail-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .resource-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .resource-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .resource-dependency {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .resource-percent {
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+
+        .impact-item {
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent-orange);
+        }
+
+        .impact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .impact-title {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .impact-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .company-item {
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .company-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .company-code {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-blue);
+            background: rgba(112, 161, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .company-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Full data table */
+        .full-table-section {
+            margin-bottom: 40px;
         }
 
         .data-table-wrapper {
@@ -206,22 +426,20 @@
 
         .data-table th {
             background: var(--bg-secondary);
-            padding: 16px 20px;
+            padding: 14px 16px;
             text-align: left;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
         }
 
         .data-table td {
-            padding: 16px 20px;
+            padding: 14px 16px;
             border-bottom: 1px solid var(--border);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .data-table tr:last-child td {
@@ -232,81 +450,22 @@
             background: rgba(255, 165, 2, 0.05);
         }
 
-        .resource-name {
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .resource-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            background: var(--bg-secondary);
-        }
-
-        .dependency-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .bar-container {
-            flex: 1;
-            height: 8px;
-            background: var(--bg-secondary);
-            border-radius: 4px;
-            overflow: hidden;
-            min-width: 80px;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.8s ease;
-        }
-
-        .bar-fill.critical {
-            background: var(--gradient-danger);
-        }
-
-        .bar-fill.warning {
-            background: var(--gradient-warning);
-        }
-
-        .bar-fill.moderate {
-            background: linear-gradient(135deg, var(--accent-yellow), var(--accent-green));
-        }
-
-        .dependency-value {
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            min-width: 50px;
-            text-align: right;
-        }
-
-        .dependency-value.critical {
-            color: var(--accent-red);
-        }
-
-        .dependency-value.warning {
-            color: var(--accent-orange);
-        }
-
         .source-tag {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 3px 8px;
             background: var(--bg-secondary);
-            border-radius: 20px;
-            font-size: 12px;
+            border-radius: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
-            margin-right: 6px;
-            margin-bottom: 4px;
+            margin-right: 4px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .source-tag:hover {
+            background: var(--accent-orange);
+            color: var(--bg-primary);
         }
 
         .source-tag.primary {
@@ -314,149 +473,38 @@
             color: var(--accent-red);
         }
 
-        /* Sidebar */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-        }
-
-        .info-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-        }
-
-        .legend-color.critical {
+        .source-tag.primary:hover {
             background: var(--accent-red);
+            color: white;
         }
 
-        .legend-color.warning {
-            background: var(--accent-orange);
-        }
-
-        .legend-color.moderate {
-            background: var(--accent-yellow);
-        }
-
-        .legend-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        /* Sources List */
-        .sources-list {
+        .dependency-badge {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 12px;
-            color: var(--text-muted);
         }
 
-        .sources-list li {
-            margin-bottom: 8px;
-            padding-left: 16px;
-            position: relative;
+        .dependency-badge.critical {
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--accent-red);
         }
 
-        .sources-list li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
+        .dependency-badge.warning {
+            background: rgba(255, 165, 2, 0.15);
             color: var(--accent-orange);
         }
 
-        /* Chart Section */
-        .chart-section {
-            margin-bottom: 48px;
-        }
-
-        .chart-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-        }
-
-        .bar-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .chart-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .chart-label {
-            width: 80px;
-            font-size: 13px;
-            font-weight: 500;
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .chart-bar-wrapper {
-            flex: 1;
-            height: 32px;
-            background: var(--bg-secondary);
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .chart-bar {
-            height: 100%;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            color: white;
-            transition: width 1s ease;
-            min-width: 60px;
-        }
-
-        .chart-bar.critical {
-            background: linear-gradient(90deg, #ff4757, #ff6b81);
-        }
-
-        .chart-bar.warning {
-            background: linear-gradient(90deg, #ffa502, #ffb142);
-        }
-
-        .chart-bar.moderate {
-            background: linear-gradient(90deg, #ffd43b, #2ed573);
+        .dependency-badge.moderate {
+            background: rgba(255, 212, 59, 0.15);
+            color: var(--accent-yellow);
         }
 
         /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 32px 0;
-            margin-top: 48px;
+            padding: 24px 0;
         }
 
         .footer-content {
@@ -465,27 +513,8 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 16px;
-        }
-
-        .footer-text {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-orange);
         }
 
         /* Animations */
@@ -501,62 +530,28 @@
         }
 
         .animate-in {
-            animation: fadeInUp 0.6s ease forwards;
+            animation: fadeInUp 0.5s ease forwards;
             opacity: 0;
         }
 
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            header {
-                padding: 40px 0 32px;
-            }
-
-            .header-content {
-                flex-direction: column;
-            }
-
-            .update-info {
-                text-align: left;
-            }
-
-            .stats-grid {
+            .country-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .data-table {
-                font-size: 13px;
+            .detail-header {
+                flex-wrap: wrap;
             }
 
-            .data-table th,
-            .data-table td {
-                padding: 12px;
+            .close-btn {
+                margin-left: 0;
+                margin-top: 12px;
             }
-
-            .chart-label {
-                width: 60px;
-                font-size: 11px;
-            }
-        }
-
-        /* Special highlight for Iran */
-        .highlight-iran {
-            background: rgba(255, 71, 87, 0.08);
-        }
-
-        .iran-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: var(--accent-red);
-            color: white;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-left: 8px;
         }
     </style>
 </head>
@@ -568,418 +563,400 @@
             <div class="header-content">
                 <div class="title-section">
                     <h1>中国关键资源对外依存度</h1>
-                    <p>战略性矿产资源进口依赖分析，数据来源于中国地质科学院、中国社科院、USGS等权威机构</p>
+                    <p>点击国家卡片，查看详细依赖分析、影响评估及国内替代企业</p>
                 </div>
                 <div class="update-info">
                     <span>数据更新: 2024-2025</span>
-                    <span>DATA SOURCE: PUBLIC</span>
+                    <span>点击国家卡片交互</span>
                 </div>
             </div>
         </header>
 
-        <!-- Stats Overview -->
-        <div class="stats-grid animate-in">
-            <div class="stat-card">
-                <div class="stat-number">99%</div>
-                <div class="stat-label">铌矿对外依存度</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">钴矿对外依存度</div>
-            </div>
-            <div class="stat-card warning">
-                <div class="stat-number">80%+</div>
-                <div class="stat-label">铁矿石对外依存度</div>
-            </div>
-            <div class="stat-card warning">
-                <div class="stat-number">72%</div>
-                <div class="stat-label">原油对外依存度</div>
+        <!-- Country Selection -->
+        <div class="country-section animate-in">
+            <h2 class="section-title">选择进口来源国</h2>
+            <div class="country-grid" id="countryGrid">
+                <!-- 动态生成 -->
             </div>
         </div>
 
-        <!-- Chart Section -->
-        <div class="chart-section animate-in delay-1">
-            <h2 class="section-title">依存度排行</h2>
-            <div class="chart-container">
-                <div class="bar-chart">
-                    <div class="chart-row">
-                        <div class="chart-label">铌矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar critical" style="width: 99%">99%</div>
+        <!-- Detail Panel -->
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-header">
+                <div class="detail-flag" id="detailFlag">🇧🇷</div>
+                <div class="detail-title">
+                    <h2 id="detailCountry">巴西</h2>
+                    <div class="detail-subtitle" id="detailSubtitle">中国对巴西资源依赖分析</div>
+                </div>
+                <button class="close-btn" onclick="closeDetail()">×</button>
+            </div>
+            <div class="detail-grid">
+                <div>
+                    <div class="detail-section" style="margin-bottom: 16px;">
+                        <h3>📦 主要依赖资源</h3>
+                        <div id="resourceList">
+                            <!-- 动态生成 -->
                         </div>
                     </div>
-                    <div class="chart-row">
-                        <div class="chart-label">钴矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar critical" style="width: 98%">98%</div>
+                    <div class="detail-section">
+                        <h3>⚠️ 断供影响分析</h3>
+                        <div id="impactList">
+                            <!-- 动态生成 -->
                         </div>
                     </div>
-                    <div class="chart-row">
-                        <div class="chart-label">钽矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar critical" style="width: 93%">93%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">镍矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar critical" style="width: 86%">86%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">铂族</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar critical" style="width: 82%">82%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">铁矿石</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar warning" style="width: 80%">80%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">原油</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar warning" style="width: 72%">72%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">锂矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar warning" style="width: 58%">58%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">锶矿</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar warning" style="width: 50%">50%</div>
-                        </div>
-                    </div>
-                    <div class="chart-row">
-                        <div class="chart-label">钾盐</div>
-                        <div class="chart-bar-wrapper">
-                            <div class="chart-bar moderate" style="width: 52%">52%</div>
+                </div>
+                <div>
+                    <div class="detail-section">
+                        <h3>🏭 国内替代企业</h3>
+                        <div id="companyList">
+                            <!-- 动态生成 -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="content-grid">
-            <div class="main-content animate-in delay-2">
-                <h2 class="section-title">详细数据</h2>
-                <div class="data-table-wrapper">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>资源</th>
-                                <th>依存度</th>
-                                <th>主要来源</th>
-                                <th>用途</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="highlight-iran">
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🔩</div>
-                                        铌矿<span class="iran-badge">最高</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill critical" style="width: 99%"></div>
-                                        </div>
-                                        <span class="dependency-value critical">99%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">巴西 85%+</span>
-                                </td>
-                                <td>钢铁添加剂、航空航天</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🔋</div>
-                                        钴矿
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill critical" style="width: 98%"></div>
-                                        </div>
-                                        <span class="dependency-value critical">98%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">刚果金 98.5%</span>
-                                </td>
-                                <td>电池、磁性材料</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">⚡</div>
-                                        钽矿
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill critical" style="width: 93%"></div>
-                                        </div>
-                                        <span class="dependency-value critical">93%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag">非洲多国</span>
-                                </td>
-                                <td>电子元件、电容器</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🧲</div>
-                                        镍矿
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill critical" style="width: 86%"></div>
-                                        </div>
-                                        <span class="dependency-value critical">83-90%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">印尼</span>
-                                    <span class="source-tag">菲律宾</span>
-                                </td>
-                                <td>不锈钢、电池</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">💎</div>
-                                        铂族金属
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill critical" style="width: 82%"></div>
-                                        </div>
-                                        <span class="dependency-value critical">80%+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">南非</span>
-                                    <span class="source-tag">俄罗斯</span>
-                                </td>
-                                <td>催化剂、电子、医疗</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🏔️</div>
-                                        铁矿石
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill warning" style="width: 80%"></div>
-                                        </div>
-                                        <span class="dependency-value warning">80%+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">澳洲 60%</span>
-                                    <span class="source-tag">巴西 20%</span>
-                                </td>
-                                <td>钢铁冶炼</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🛢️</div>
-                                        原油
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill warning" style="width: 72%"></div>
-                                        </div>
-                                        <span class="dependency-value warning">72%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag">多国</span>
-                                    <span class="source-tag">伊朗 ~9%</span>
-                                </td>
-                                <td>能源、化工</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">⚡</div>
-                                        锂矿
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill warning" style="width: 58%"></div>
-                                        </div>
-                                        <span class="dependency-value warning">55-60%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">澳洲</span>
-                                    <span class="source-tag">南美</span>
-                                </td>
-                                <td>锂电池</td>
-                            </tr>
-                            <tr class="highlight-iran">
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🔮</div>
-                                        锶矿<span class="iran-badge">伊朗依赖</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill warning" style="width: 50%"></div>
-                                        </div>
-                                        <span class="dependency-value warning">50%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag primary">伊朗 60-70%</span>
-                                </td>
-                                <td>玻璃基板、磁性材料</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="resource-name">
-                                        <div class="resource-icon">🧪</div>
-                                        钾盐
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dependency-bar">
-                                        <div class="bar-container">
-                                            <div class="bar-fill moderate" style="width: 52%"></div>
-                                        </div>
-                                        <span class="dependency-value">50-55%</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="source-tag">俄罗斯</span>
-                                    <span class="source-tag">白俄</span>
-                                    <span class="source-tag">加拿大</span>
-                                </td>
-                                <td>农业化肥</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="sidebar animate-in delay-3">
-                <div class="info-card">
-                    <h3>风险等级说明</h3>
-                    <div class="legend-item">
-                        <div class="legend-color critical"></div>
-                        <span class="legend-text">极高依赖 (>80%) - 战略风险高</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color warning"></div>
-                        <span class="legend-text">高依赖 (50-80%) - 需要关注</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color moderate"></div>
-                        <span class="legend-text">中等依赖 (<50%) - 相对可控</span>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>关键发现</h3>
-                    <ul class="sources-list">
-                        <li>铌矿依赖度最高(99%)，巴西占比85%+</li>
-                        <li>钴矿98%依赖刚果金，新能源瓶颈</li>
-                        <li>锶矿50%依赖进口，其中伊朗占60-70%</li>
-                        <li>铁矿石80%依赖进口，澳洲占60%</li>
-                        <li>中国优势资源：稀土、钨、钼、镓、锗</li>
-                    </ul>
-                </div>
-
-                <div class="info-card">
-                    <h3>数据来源</h3>
-                    <ul class="sources-list">
-                        <li>中国地质科学院</li>
-                        <li>中国社科院世经政所</li>
-                        <li>国家自然科学基金委</li>
-                        <li>USGS (美国地质调查局)</li>
-                        <li>上海有色网 SMM</li>
-                        <li>海关总署统计数据</li>
-                    </ul>
-                </div>
+        <!-- Full Data Table -->
+        <div class="full-table-section animate-in delay-2">
+            <h2 class="section-title">完整数据一览</h2>
+            <div class="data-table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>资源</th>
+                            <th>对外依存度</th>
+                            <th>主要来源（点击筛选）</th>
+                            <th>用途</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                        <!-- 动态生成 -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <footer>
             <div class="footer-content">
-                <div class="footer-text">
-                    数据仅供参考，来源均为公开资料 | 2025
-                </div>
-                <div class="footer-links">
-                    <a href="https://github.com" target="_blank">GitHub</a>
-                    <a href="#" onclick="alert('数据来源详见右侧数据来源卡片')">数据说明</a>
-                </div>
+                <div>数据来源：中国地质科学院、中国社科院、USGS、海关总署等公开资料</div>
+                <div>2025 | 点击国家卡片查看详情</div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Animate bars on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+        // 国家数据
+        const countryData = {
+            brazil: {
+                name: '巴西',
+                flag: '🇧🇷',
+                risk: 'critical',
+                resources: '铌矿、铁矿石',
+                details: {
+                    resources: [
+                        { icon: '🔩', name: '铌矿', percent: '85%+', dependency: '占中国进口总量' },
+                        { icon: '🏔️', name: '铁矿石', percent: '20%', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '钢铁行业受冲击', desc: '铌是高强度钢关键添加剂，断供将影响建筑、汽车、造船' },
+                        { title: '供应链高度集中', desc: '巴西铌矿由CBMM垄断，占全球85%产量' },
+                        { title: '替代周期长', desc: '国内铌矿品位低，开发周期5-10年' }
+                    ],
+                    companies: [
+                        { name: '包钢股份', code: '600010', note: '内蒙古铌稀土资源' },
+                        { name: '江西钨业', code: '600789', note: '多金属综合回收铌' },
+                        { name: '洛阳钼业', code: '603993', note: '海外铌矿布局' }
+                    ]
+                }
+            },
+            congo: {
+                name: '刚果金',
+                flag: '🇨🇩',
+                risk: 'critical',
+                resources: '钴矿、铜矿',
+                details: {
+                    resources: [
+                        { icon: '🔋', name: '钴矿', percent: '98.5%', dependency: '占中国进口总量' },
+                        { icon: '🥉', name: '铜矿', percent: '30%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '新能源产业瓶颈', desc: '钴是动力电池正极材料核心，断供将冲击电动车产业' },
+                        { title: '地缘政治风险高', desc: '刚果金政局不稳，政策变动频繁' },
+                        { title: '价格波动剧烈', desc: '2022年钴价暴涨3倍，电池成本压力巨大' }
+                    ],
+                    companies: [
+                        { name: '华友钴业', code: '603799', note: '刚果金钴矿龙头' },
+                        { name: '寒锐钴业', code: '300618', note: '钴粉钴盐一体化' },
+                        { name: '洛阳钼业', code: '603993', note: 'Tenke铜钴矿' },
+                        { name: '格林美', code: '002340', note: '钴回收龙头' }
+                    ]
+                }
+            },
+            iran: {
+                name: '伊朗',
+                flag: '🇮🇷',
+                risk: 'critical',
+                resources: '锶矿、原油',
+                details: {
+                    resources: [
+                        { icon: '🔮', name: '锶矿(天青石)', percent: '60-70%', dependency: '占中国进口总量' },
+                        { icon: '🛢️', name: '原油', percent: '9%', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '锶矿品位不可替代', desc: '伊朗天青石品位85%+，国内仅35-60%，冶炼成本差距大' },
+                        { title: '制裁风险', desc: '美国制裁可能导致进口中断' },
+                        { title: '玻璃基板供应紧张', desc: '碳酸锶是显示器玻璃基板原料，断供影响电子产业' }
+                    ],
+                    companies: [
+                        { name: '金瑞矿业', code: '600714', note: '青海大风山锶矿' },
+                        { name: '红星发展', code: '600367', note: '碳酸锶产能3万吨' },
+                        { name: '河北辛集化工', code: '未上市', note: '碳酸锶产能3-4万吨' }
+                    ]
+                }
+            },
+            indonesia: {
+                name: '印尼',
+                flag: '🇮🇩',
+                risk: 'critical',
+                resources: '镍矿、煤炭',
+                details: {
+                    resources: [
+                        { icon: '🧲', name: '镍矿', percent: '60%+', dependency: '占中国进口总量' },
+                        { icon: '⚫', name: '煤炭', percent: '25%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '电池产业链受阻', desc: '镍是三元锂电池核心，断供影响新能源车发展' },
+                        { title: '政策风险', desc: '印尼频繁调整出口政策，要求境内加工' },
+                        { title: '不锈钢成本上升', desc: '镍是不锈钢关键原料，价格上涨传导至下游' }
+                    ],
+                    companies: [
+                        { name: '青山控股', code: '未上市', note: '印尼镍矿龙头' },
+                        { name: '华友钴业', code: '603799', note: '印尼镍钴项目' },
+                        { name: '中伟股份', code: '300919', note: '镍前驱体材料' },
+                        { name: '盛屯矿业', code: '600393', note: '印尼镍项目' }
+                    ]
+                }
+            },
+            australia: {
+                name: '澳大利亚',
+                flag: '🇦🇺',
+                risk: 'high',
+                resources: '铁矿石、锂矿',
+                details: {
+                    resources: [
+                        { icon: '🏔️', name: '铁矿石', percent: '60%', dependency: '占中国进口总量' },
+                        { icon: '⚡', name: '锂矿', percent: '50%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '钢铁命脉', desc: '澳洲铁矿断供将重创中国钢铁工业' },
+                        { title: '中澳关系敏感', desc: '政治关系波动可能影响贸易' },
+                        { title: '价格话语权弱', desc: '澳洲两大矿山控制定价权' }
+                    ],
+                    companies: [
+                        { name: '宝武钢铁', code: '600019', note: '西芒杜铁矿布局' },
+                        { name: '河钢资源', code: '000923', note: '海外铁矿开发' },
+                        { name: '天齐锂业', code: '002466', note: '澳洲锂矿股权' },
+                        { name: '赣锋锂业', code: '002460', note: '全球锂资源布局' }
+                    ]
+                }
+            },
+            russia: {
+                name: '俄罗斯',
+                flag: '🇷🇺',
+                risk: 'high',
+                resources: '原油、天然气、钾盐',
+                details: {
+                    resources: [
+                        { icon: '🛢️', name: '原油', percent: '15%+', dependency: '占中国进口总量' },
+                        { icon: '🔥', name: '天然气', percent: '10%+', dependency: '管道进口' },
+                        { icon: '🧪', name: '钾盐', percent: '30%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '能源多元化', desc: '俄罗斯是能源进口多元化重要来源' },
+                        { title: '制裁风险', desc: '西方制裁可能影响结算和运输' },
+                        { title: '化肥供应', desc: '钾肥断供影响农业生产' }
+                    ],
+                    companies: [
+                        { name: '中国石油', code: '601857', note: '中俄能源合作' },
+                        { name: '中国石化', code: '600028', note: '炼化一体化' },
+                        { name: '盐湖股份', code: '000792', note: '国内钾肥龙头' },
+                        { name: '藏格矿业', code: '000408', note: '钾肥产能' }
+                    ]
+                }
+            },
+            southafrica: {
+                name: '南非',
+                flag: '🇿🇦',
+                risk: 'high',
+                resources: '铂族金属、锰矿',
+                details: {
+                    resources: [
+                        { icon: '💎', name: '铂族金属', percent: '60%+', dependency: '占中国进口总量' },
+                        { icon: '🔩', name: '锰矿', percent: '40%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '汽车催化剂', desc: '铂钯是汽车尾气催化剂核心' },
+                        { title: '电子产业', desc: '铂族金属用于电子元器件' },
+                        { title: '供应集中', desc: '南非铂矿占全球70%+' }
+                    ],
+                    companies: [
+                        { name: '贵研铂业', code: '600459', note: '铂族金属加工' },
+                        { name: '株冶集团', code: '600961', note: '贵金属综合回收' }
+                    ]
+                }
+            },
+            philippines: {
+                name: '菲律宾',
+                flag: '🇵🇭',
+                risk: 'high',
+                resources: '镍矿、铜矿',
+                details: {
+                    resources: [
+                        { icon: '🧲', name: '镍矿', percent: '30%+', dependency: '占中国进口总量' },
+                        { icon: '🥉', name: '铜矿', percent: '10%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '镍矿补充来源', desc: '作为印尼禁矿后的重要补充' },
+                        { title: '品位较低', desc: '菲律宾镍矿品位低于印尼' },
+                        { title: '政策风险', desc: '环保政策趋严，出口受限' }
+                    ],
+                    companies: [
+                        { name: '中色股份', code: '000758', note: '菲律宾镍矿项目' }
+                    ]
+                }
+            }
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.chart-bar, .bar-fill').forEach((bar, index) => {
-                        setTimeout(() => {
-                            bar.style.opacity = '1';
-                        }, index * 50);
-                    });
+        // 资源数据
+        const resourceData = [
+            { name: '铌矿', icon: '🔩', dependency: '99%', level: 'critical', sources: [{ country: 'brazil', percent: '85%+', primary: true }], usage: '钢铁添加剂、航空航天' },
+            { name: '钴矿', icon: '🔋', dependency: '98%', level: 'critical', sources: [{ country: 'congo', percent: '98.5%', primary: true }], usage: '电池、磁性材料' },
+            { name: '钽矿', icon: '⚡', dependency: '93%', level: 'critical', sources: [{ country: 'africa', percent: '多国', primary: false }], usage: '电子元件、电容器' },
+            { name: '镍矿', icon: '🧲', dependency: '83-90%', level: 'critical', sources: [{ country: 'indonesia', percent: '60%+', primary: true }, { country: 'philippines', percent: '30%+', primary: false }], usage: '不锈钢、电池' },
+            { name: '铂族金属', icon: '💎', dependency: '80%+', level: 'critical', sources: [{ country: 'southafrica', percent: '60%+', primary: true }, { country: 'russia', percent: '20%+', primary: false }], usage: '催化剂、电子、医疗' },
+            { name: '铁矿石', icon: '🏔️', dependency: '80%+', level: 'warning', sources: [{ country: 'australia', percent: '60%', primary: true }, { country: 'brazil', percent: '20%', primary: false }], usage: '钢铁冶炼' },
+            { name: '原油', icon: '🛢️', dependency: '72%', level: 'warning', sources: [{ country: 'russia', percent: '15%+', primary: false }, { country: 'iran', percent: '9%', primary: false }], usage: '能源、化工' },
+            { name: '锂矿', icon: '⚡', dependency: '55-60%', level: 'warning', sources: [{ country: 'australia', percent: '50%+', primary: true }], usage: '锂电池' },
+            { name: '锶矿', icon: '🔮', dependency: '50%', level: 'warning', sources: [{ country: 'iran', percent: '60-70%', primary: true }], usage: '玻璃基板、磁性材料' },
+            { name: '钾盐', icon: '🧪', dependency: '50-55%', level: 'moderate', sources: [{ country: 'russia', percent: '30%+', primary: true }], usage: '农业化肥' }
+        ];
+
+        // 初始化国家卡片
+        function initCountryGrid() {
+            const grid = document.getElementById('countryGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(countryData).forEach(([key, data]) => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.dataset.country = key;
+                card.innerHTML = `
+                    <span class="country-risk ${data.risk}">${data.risk === 'critical' ? '极高风险' : '高风险'}</span>
+                    <div class="country-flag">${data.flag}</div>
+                    <div class="country-name">${data.name}</div>
+                    <div class="country-resources">${data.resources}</div>
+                `;
+                card.addEventListener('click', () => showDetail(key));
+                grid.appendChild(card);
+            });
+        }
+
+        // 显示详情
+        function showDetail(countryKey) {
+            const data = countryData[countryKey];
+            if (!data) return;
+
+            // 更新active状态
+            document.querySelectorAll('.country-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.dataset.country === countryKey) {
+                    card.classList.add('active');
                 }
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.chart-container, .data-table-wrapper').forEach(el => {
-            observer.observe(el);
-        });
+            // 更新详情面板
+            document.getElementById('detailFlag').textContent = data.flag;
+            document.getElementById('detailCountry').textContent = data.name;
+            document.getElementById('detailSubtitle').textContent = `中国对${data.name}资源依赖分析`;
 
-        // Add hover effect to table rows
-        document.querySelectorAll('.data-table tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                row.style.transform = 'scale(1.01)';
+            // 资源列表
+            const resourceList = document.getElementById('resourceList');
+            resourceList.innerHTML = data.details.resources.map(r => `
+                <div class="resource-item">
+                    <div class="resource-icon">${r.icon}</div>
+                    <div class="resource-info">
+                        <div class="resource-name">${r.name}</div>
+                        <div class="resource-dependency">${r.dependency}</div>
+                    </div>
+                    <div class="resource-percent">${r.percent}</div>
+                </div>
+            `).join('');
+
+            // 影响列表
+            const impactList = document.getElementById('impactList');
+            impactList.innerHTML = data.details.impacts.map(i => `
+                <div class="impact-item">
+                    <div class="impact-title">${i.title}</div>
+                    <div class="impact-desc">${i.desc}</div>
+                </div>
+            `).join('');
+
+            // 企业列表
+            const companyList = document.getElementById('companyList');
+            companyList.innerHTML = data.details.companies.map(c => `
+                <div class="company-item">
+                    <div>
+                        <div class="company-name">${c.name}</div>
+                        <div class="company-note">${c.note}</div>
+                    </div>
+                    ${c.code !== '未上市' ? `<span class="company-code">${c.code}</span>` : '<span class="company-code" style="background:#333;color:#666;">未上市</span>'}
+                </div>
+            `).join('');
+
+            // 显示面板
+            const panel = document.getElementById('detailPanel');
+            panel.classList.add('show');
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 关闭详情
+        function closeDetail() {
+            document.getElementById('detailPanel').classList.remove('show');
+            document.querySelectorAll('.country-card').forEach(card => {
+                card.classList.remove('active');
             });
-            row.addEventListener('mouseleave', () => {
-                row.style.transform = 'scale(1)';
-            });
+        }
+
+        // 初始化数据表格
+        function initDataTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = resourceData.map(r => `
+                <tr>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <span style="font-size:18px;">${r.icon}</span>
+                            <span style="font-weight:500;">${r.name}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="dependency-badge ${r.level}">${r.dependency}</span>
+                    </td>
+                    <td>
+                        ${r.sources.map(s => {
+                            const country = countryData[s.country];
+                            const name = country ? country.name : '多国';
+                            return `<span class="source-tag ${s.primary ? 'primary' : ''}" onclick="${country ? `showDetail('${s.country}')` : ''}">${name} ${s.percent}</span>`;
+                        }).join('')}
+                    </td>
+                    <td>${r.usage}</td>
+                </tr>
+            `).join('');
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initCountryGrid();
+            initDataTable();
         });
     </script>
 </body>
