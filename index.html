@@ -651,21 +651,24 @@
                 name: '巴西',
                 flag: '🇧🇷',
                 risk: 'critical',
-                resources: '铌矿、铁矿石',
+                resources: '铌矿、铁矿石、大豆',
                 details: {
                     resources: [
                         { icon: '🔩', name: '铌矿', percent: '85%+', dependency: '占中国进口总量' },
-                        { icon: '🏔️', name: '铁矿石', percent: '20%', dependency: '占中国进口总量' }
+                        { icon: '🏔️', name: '铁矿石', percent: '20%', dependency: '占中国进口总量' },
+                        { icon: '🫘', name: '大豆', percent: '71%', dependency: '占中国进口总量' }
                     ],
                     impacts: [
                         { title: '钢铁行业受冲击', desc: '铌是高强度钢关键添加剂，断供将影响建筑、汽车、造船' },
                         { title: '供应链高度集中', desc: '巴西铌矿由CBMM垄断，占全球85%产量' },
+                        { title: '粮食安全', desc: '大豆是饲料核心原料，断供影响肉蛋奶供应' },
                         { title: '替代周期长', desc: '国内铌矿品位低，开发周期5-10年' }
                     ],
                     companies: [
                         { name: '包钢股份', code: '600010', note: '内蒙古铌稀土资源' },
                         { name: '江西钨业', code: '600789', note: '多金属综合回收铌' },
-                        { name: '洛阳钼业', code: '603993', note: '海外铌矿布局' }
+                        { name: '洛阳钼业', code: '603993', note: '海外铌矿布局' },
+                        { name: '北大荒', code: '600598', note: '国内大豆种植' }
                     ]
                 }
             },
@@ -787,21 +790,24 @@
             southafrica: {
                 name: '南非',
                 flag: '🇿🇦',
-                risk: 'high',
-                resources: '铂族金属、锰矿',
+                risk: 'critical',
+                resources: '铬矿、铂族金属、锰矿',
                 details: {
                     resources: [
+                        { icon: '🔩', name: '铬矿', percent: '80%+', dependency: '占中国进口总量' },
                         { icon: '💎', name: '铂族金属', percent: '60%+', dependency: '占中国进口总量' },
-                        { icon: '🔩', name: '锰矿', percent: '40%+', dependency: '占中国进口总量' }
+                        { icon: '🔩', name: '锰矿', percent: '50%+', dependency: '占中国进口总量' }
                     ],
                     impacts: [
+                        { title: '不锈钢命脉', desc: '铬矿是不锈钢关键原料，对外依存度接近100%' },
                         { title: '汽车催化剂', desc: '铂钯是汽车尾气催化剂核心' },
                         { title: '电子产业', desc: '铂族金属用于电子元器件' },
-                        { title: '供应集中', desc: '南非铂矿占全球70%+' }
+                        { title: '供应集中', desc: '南非铬矿+铂矿占全球70%+' }
                     ],
                     companies: [
                         { name: '贵研铂业', code: '600459', note: '铂族金属加工' },
-                        { name: '株冶集团', code: '600961', note: '贵金属综合回收' }
+                        { name: '株冶集团', code: '600961', note: '贵金属综合回收' },
+                        { name: '西藏矿业', code: '000762', note: '铬矿资源' }
                     ]
                 }
             },
@@ -824,19 +830,133 @@
                         { name: '中色股份', code: '000758', note: '菲律宾镍矿项目' }
                     ]
                 }
+            },
+            chile: {
+                name: '智利',
+                flag: '🇨🇱',
+                risk: 'critical',
+                resources: '铜矿、锂矿',
+                details: {
+                    resources: [
+                        { icon: '🥉', name: '铜矿', percent: '30%+', dependency: '占中国进口总量' },
+                        { icon: '⚡', name: '锂矿', percent: '20%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '铜矿命脉', desc: '智利是全球最大铜生产国，占全球产量28%' },
+                        { title: '锂电池原料', desc: '智利锂矿储量全球第一，断供影响新能源产业' },
+                        { title: '供应链集中', desc: '智利+秘鲁占中国铜精矿进口57%+' }
+                    ],
+                    companies: [
+                        { name: '紫金矿业', code: '601899', note: '海外铜矿布局' },
+                        { name: '洛阳钼业', code: '603993', note: '刚果铜钴+南美铜' },
+                        { name: '江西铜业', code: '600362', note: '铜冶炼龙头' },
+                        { name: '铜陵有色', code: '000630', note: '铜全产业链' }
+                    ]
+                }
+            },
+            peru: {
+                name: '秘鲁',
+                flag: '🇵🇪',
+                risk: 'critical',
+                resources: '铜矿、锌矿、银矿',
+                details: {
+                    resources: [
+                        { icon: '🥉', name: '铜矿', percent: '25%+', dependency: '占中国进口总量' },
+                        { icon: '🔩', name: '锌矿', percent: '20%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '铜矿第二大来源', desc: '秘鲁是全球第二大铜生产国' },
+                        { title: '政治风险', desc: '秘鲁政局不稳，频繁发生矿工罢工' },
+                        { title: '运输风险', desc: '海运距离远，物流成本高' }
+                    ],
+                    companies: [
+                        { name: '紫金矿业', code: '601899', note: '秘鲁铜矿项目' },
+                        { name: '中铝国际', code: '601068', note: '秘鲁铜矿开发' },
+                        { name: '首钢秘铁', code: '未上市', note: '秘鲁铁矿' }
+                    ]
+                }
+            },
+            guinea: {
+                name: '几内亚',
+                flag: '🇬🇳',
+                risk: 'critical',
+                resources: '铝土矿',
+                details: {
+                    resources: [
+                        { icon: '🪨', name: '铝土矿', percent: '70%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '铝业命脉', desc: '几内亚铝土矿占中国进口70%+，断供将重创铝工业' },
+                        { title: '政局不稳', desc: '几内亚政变频发，供应风险高' },
+                        { title: '运输距离远', desc: '西非到中国海运周期长' }
+                    ],
+                    companies: [
+                        { name: '中国铝业', code: '601600', note: '几内亚铝土矿项目' },
+                        { name: '山东魏桥', code: '未上市', note: '几内亚赢联盟' },
+                        { name: '南山铝业', code: '600219', note: '铝产业链布局' },
+                        { name: '云铝股份', code: '000807', note: '国内铝资源' }
+                    ]
+                }
+            },
+            usa: {
+                name: '美国',
+                flag: '🇺🇸',
+                risk: 'high',
+                resources: '大豆、芯片',
+                details: {
+                    resources: [
+                        { icon: '🫘', name: '大豆', percent: '21%', dependency: '占中国进口总量' },
+                        { icon: '💻', name: '芯片设备', percent: '40%+', dependency: '高端芯片进口' }
+                    ],
+                    impacts: [
+                        { title: '粮食安全', desc: '大豆是饲料和食用油核心原料' },
+                        { title: '科技封锁', desc: '美国对华芯片禁令影响半导体产业' },
+                        { title: '贸易摩擦', desc: '中美关系波动影响供应稳定性' }
+                    ],
+                    companies: [
+                        { name: '北大荒', code: '600598', note: '国内大豆种植' },
+                        { name: '中芯国际', code: '688981', note: '芯片国产替代' },
+                        { name: '北方华创', code: '002371', note: '半导体设备' },
+                        { name: '中微公司', code: '688012', note: '刻蚀设备' }
+                    ]
+                }
+            },
+            gabon: {
+                name: '加蓬',
+                flag: '🇬🇦',
+                risk: 'high',
+                resources: '锰矿、石油',
+                details: {
+                    resources: [
+                        { icon: '🔩', name: '锰矿', percent: '15%+', dependency: '占中国进口总量' }
+                    ],
+                    impacts: [
+                        { title: '锰矿第三大来源', desc: '加蓬高品位锰矿对钢铁行业重要' },
+                        { title: '运输风险', desc: '西非海运周期长，成本高' },
+                        { title: '政局影响', desc: '政治变动可能影响矿业政策' }
+                    ],
+                    companies: [
+                        { name: '中信金属', code: '601061', note: '加蓬锰矿布局' }
+                    ]
+                }
             }
         };
 
         // 资源数据
         const resourceData = [
+            { name: '铬矿', icon: '🔩', dependency: '~100%', level: 'critical', sources: [{ country: 'southafrica', percent: '80%+', primary: true }], usage: '不锈钢添加剂' },
             { name: '铌矿', icon: '🔩', dependency: '99%', level: 'critical', sources: [{ country: 'brazil', percent: '85%+', primary: true }], usage: '钢铁添加剂、航空航天' },
             { name: '钴矿', icon: '🔋', dependency: '98%', level: 'critical', sources: [{ country: 'congo', percent: '98.5%', primary: true }], usage: '电池、磁性材料' },
             { name: '钽矿', icon: '⚡', dependency: '93%', level: 'critical', sources: [{ country: 'africa', percent: '多国', primary: false }], usage: '电子元件、电容器' },
+            { name: '大豆', icon: '🫘', dependency: '83%+', level: 'critical', sources: [{ country: 'brazil', percent: '71%', primary: true }, { country: 'usa', percent: '21%', primary: false }], usage: '饲料、食用油' },
             { name: '镍矿', icon: '🧲', dependency: '83-90%', level: 'critical', sources: [{ country: 'indonesia', percent: '60%+', primary: true }, { country: 'philippines', percent: '30%+', primary: false }], usage: '不锈钢、电池' },
             { name: '铂族金属', icon: '💎', dependency: '80%+', level: 'critical', sources: [{ country: 'southafrica', percent: '60%+', primary: true }, { country: 'russia', percent: '20%+', primary: false }], usage: '催化剂、电子、医疗' },
+            { name: '铝土矿', icon: '🪨', dependency: '75%+', level: 'critical', sources: [{ country: 'guinea', percent: '70%+', primary: true }, { country: 'australia', percent: '23%', primary: false }], usage: '铝冶炼' },
             { name: '铁矿石', icon: '🏔️', dependency: '80%+', level: 'warning', sources: [{ country: 'australia', percent: '60%', primary: true }, { country: 'brazil', percent: '20%', primary: false }], usage: '钢铁冶炼' },
+            { name: '铜矿', icon: '🥉', dependency: '75%+', level: 'warning', sources: [{ country: 'chile', percent: '30%+', primary: true }, { country: 'peru', percent: '25%+', primary: false }], usage: '电力、电子、建筑' },
+            { name: '锰矿', icon: '🔩', dependency: '70%+', level: 'warning', sources: [{ country: 'southafrica', percent: '50%+', primary: true }, { country: 'gabon', percent: '15%+', primary: false }], usage: '钢铁添加剂、电池' },
             { name: '原油', icon: '🛢️', dependency: '72%', level: 'warning', sources: [{ country: 'russia', percent: '15%+', primary: false }, { country: 'iran', percent: '9%', primary: false }], usage: '能源、化工' },
-            { name: '锂矿', icon: '⚡', dependency: '55-60%', level: 'warning', sources: [{ country: 'australia', percent: '50%+', primary: true }], usage: '锂电池' },
+            { name: '锂矿', icon: '⚡', dependency: '55-60%', level: 'warning', sources: [{ country: 'australia', percent: '50%+', primary: true }, { country: 'chile', percent: '20%+', primary: false }], usage: '锂电池' },
             { name: '锶矿', icon: '🔮', dependency: '50%', level: 'warning', sources: [{ country: 'iran', percent: '60-70%', primary: true }], usage: '玻璃基板、磁性材料' },
             { name: '钾盐', icon: '🧪', dependency: '50-55%', level: 'moderate', sources: [{ country: 'russia', percent: '30%+', primary: true }], usage: '农业化肥' }
         ];
